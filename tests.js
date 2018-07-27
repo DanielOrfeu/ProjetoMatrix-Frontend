@@ -24,14 +24,22 @@ QUnit.module( "Gerenciar Participantes", function() {
     sistema.removerParticipante("pmendes@matrix.com");
 
   });
-
+  
+  //Teste adicional implementado
+  QUnit.test( "remover participante não cadastrado", function( assert ) {    
+    sistema.adicionarParticipante("Maria", "Mendes", "mmendes@matrix.com", 36, 2);
+    var maria = sistema.removerParticipante("mmendes@matrix.com");
+    assert.ok(!maria, "Não foi encontrado o registro. Não houve exclusão");
+  });
+  //Teste adicional implementado 
+  
   QUnit.test( "remover participante", function( assert ) {    
     sistema.adicionarParticipante("Maria", "Mendes", "mmendes@matrix.com", 36, 2);
     sistema.removerParticipante("mmendes@matrix.com");
     var maria = sistema.obterParticipante("mmendes@matrix.com");
     assert.ok(!maria, "Não foi encontrado o registro");
   });
-
+  
   QUnit.test( "obter participante", function( assert ) {
     sistema.adicionarParticipante("Rodolfo", "Mendes", "rmendes@matrix.com", 16, 1);
     var rodolfo = sistema.obterParticipante("rmendes@matrix.com");
@@ -39,8 +47,16 @@ QUnit.module( "Gerenciar Participantes", function() {
 
     assert.equal( rodolfo.sobrenome, "Mendes", "Sobrenome correto");
     assert.equal( rodolfo.idade, 16, "Idade correta");
-    assert.equal( rodolfo.sexo, 1, "Sexo Masculino");    
+    assert.equal( rodolfo.sexo, 1, "Sexo Masculino");
   });
+  
+  //Teste adicional implementado
+  QUnit.test( "obter participante não cadastrado", function( assert ) {
+	sistema.removerParticipante("rmendes@matrix.com");
+    var rodolfo = sistema.obterParticipante("rmendes@matrix.com");
+    assert.ok(!rodolfo, "Participante não foi encontrado no registro");
+  });
+  //Teste adicional implementado 
 
   QUnit.test( "verificar Se Participante Esta Aprovado", function( assert ) {
     sistema.adicionarParticipante("Rodolfo", "Mendes", "rmendes@matrix.com", 16, 1);
@@ -49,7 +65,15 @@ QUnit.module( "Gerenciar Participantes", function() {
     var resultado = sistema.verificarSeParticipanteEstaAprovado("rmendes@matrix.com");
         
     sistema.removerParticipante("rmendes@matrix.com");
-    assert.ok( resultado, "Aprovado");    
+    assert.ok(resultado, "Aprovado");    
+	
+	//Teste adicional implementado
+    sistema.adicionarParticipante("Rodolfo", "Mendes", "rmendes@matrix.com", 16, 1);
+	sistema.adicionarNotaAoParticipante("rmendes@matrix.com", 69);
+    var resultado = sistema.verificarSeParticipanteEstaAprovado("rmendes@matrix.com");
+    sistema.removerParticipante("rmendes@matrix.com");
+    assert.ok(!resultado, "Reprovado"); 
+	//Teste adicional implementado
   });
 });
 
