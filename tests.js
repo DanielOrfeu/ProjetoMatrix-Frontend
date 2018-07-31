@@ -27,7 +27,7 @@ QUnit.module( "Gerenciar Participantes", function() {
   
   //Teste adicional implementado
   QUnit.test( "remover participante não cadastrado", function( assert ) {   
-	sistema.removerParticipante("mmendes@matrix.com");
+    sistema.removerParticipante("mmendes@matrix.com");
     var maria = sistema.removerParticipante("mmendes@matrix.com");
     assert.ok(!maria, "Não foi encontrado o registro. Não houve exclusão");
   });
