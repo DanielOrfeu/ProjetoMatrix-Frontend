@@ -18,7 +18,7 @@ function SistemaCadastro() {
     var participantes = [];
     function adicionarParticipante(nome, sobrenome, email, idade, sexo) {
         //implemente o código necessário
-		if(procurarEmailNoSistema(email)===-1){
+		if(obterParticipante(email) === undefined){
 			var p = new Participante();
 			p.nome = nome;
 			p.sobrenome = sobrenome;
@@ -31,87 +31,60 @@ function SistemaCadastro() {
 			throw new Error('Já existe um participante com o email: '+email+' dentro da base');	
 		}
     }
-	function procurarEmailNoSistema(email){
-		for(var i=0; i<participantes.length; i++){
-			if(participantes[i].email===email){
-				return i;
-			}
-		}
-		return -1;
-	}
     function removerParticipante(email) {
         //implemente o código necessário
-		var index=procurarEmailNoSistema(email);
-		if(index>-1){
-			participantes.splice(index,1);
-		}
+		participantes.splice(participantes.findIndex(function(objeto){
+			return objeto.email === email;
+		}),1) ;
     }
     function buscarParticipantesPorNome(nome){
 		//implemente o código necessário
-		var resultados = [];
-		for(var i=0; i<participantes.length; i++){
-			if(participantes[i].nome===nome){
-				resultados.push(participantes[i]);
-			}
-		}
-		return resultados;
+		return participantes.filter(function(objeto){
+			return objeto.nome === nome;
+		});
     }  
     function buscarParticipantesPorSexo(sexo){
 		//implemente o código necessário
-		var resultados=[];
-		for(var i=0; i<participantes.length; i++){
-			if(participantes[i].sexo===sexo){
-				resultados.push(participantes[i]);
-			}
-		}
-		return resultados;
+		return participantes.filter(function(objeto){
+			return objeto.sexo === sexo;
+		});
     }
     function buscarParticipantesAprovados(){
-        //implemente o código necessário
-		var resultados=[];
-		for(var i=0; i<participantes.length; i++){
-			if(participantes[i].aprovado){
-				resultados.push(participantes[i]);
-			}
-		}
-		return resultados;
+		//implemente o código necessário
+		return participantes.filter(function(objeto){
+			return objeto.aprovado;
+		});
     }
     function buscarParticipantesReprovados(){
-        //implemente o código necessário
-		var resultados=[];
-		resultados.length;
-		for(var i=0; i<participantes.length; i++){
-			if(participantes[i].aprovado===false){
-				resultados.push(participantes[i]);
-			}
-		}
-		return resultados;
+		//implemente o código necessário
+		return participantes.filter(function(objeto){
+			return !(objeto.aprovado);
+		});
     }
     function obterParticipante(email){
         //implemente o código necessário
-		var index=procurarEmailNoSistema(email);
-		if(index>-1){
-			return participantes[index];
-		}
+		return participantes.find(function(objeto){
+			return objeto.email === email;
+		});
     }
     function adicionarNotaAoParticipante(email, nota){
         //implemente o código necessário
-		var index=procurarEmailNoSistema(email);
-		if(index>-1){
-			participantes[index].nota=nota;
-			if(participantes[index].nota>=70){
-				participantes[index].aprovado=true;
-			}else{
-				participantes[index].aprovado=false;
-			}
+		var index = participantes.findIndex(function(objeto){
+			return objeto.email === email;
+		});
+		participantes[index].nota = nota;
+		if(participantes[index].nota >= 70){
+			participantes[index].aprovado = true;
+		}else{
+			participantes[index].aprovado = false;
 		} 
     }
     function obterMediaDasNotasDosParticipantes(){
         //implemente o código necessário
-		var soma=0;
-		for(var i=0; i<participantes.length; i++){
-			soma+=participantes[i].nota;
-		}
+		var soma = participantes.reduce(function(acumulador,objeto){
+			return acumulador + objeto.nota;
+			
+		},0);
 		return soma/participantes.length;
     }
     function obterTotalDeParticipantes(){
@@ -119,18 +92,17 @@ function SistemaCadastro() {
     }
     function verificarSeParticipanteEstaAprovado(email){
         //implemente o código necessário
-		var index=procurarEmailNoSistema(email);
-		if(index>-1){ 
-			return participantes[index].aprovado===true;
-		}
+		return obterParticipante(email).aprovado;
     }
     function obterQuantidadeDeParticipantesPorSexo(sexo){
         //implemente o código necessário
-		var resultado=0;
-		for(var i=0; i<participantes.length; i++){
-			participantes[i].sexo===sexo? resultado++ : resultado;
-		}	
-		return resultado;
+		var contador = 0;
+		participantes.forEach(function(objeto){
+			if(objeto.sexo === sexo){
+				contador++;
+			}
+		});
+		return contador;
 	}
     return {
         adicionarParticipante,
