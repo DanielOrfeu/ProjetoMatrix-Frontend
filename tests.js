@@ -26,8 +26,8 @@ QUnit.module( "Gerenciar Participantes", function() {
   });
   
   //Teste adicional implementado
-  QUnit.test( "remover participante não cadastrado", function( assert ) {    
-    sistema.adicionarParticipante("Maria", "Mendes", "mmendes@matrix.com", 36, 2);
+  QUnit.test( "remover participante não cadastrado", function( assert ) {   
+	sistema.removerParticipante("mmendes@matrix.com");
     var maria = sistema.removerParticipante("mmendes@matrix.com");
     assert.ok(!maria, "Não foi encontrado o registro. Não houve exclusão");
   });
@@ -54,7 +54,7 @@ QUnit.module( "Gerenciar Participantes", function() {
   QUnit.test( "obter participante não cadastrado", function( assert ) {
 	sistema.removerParticipante("rmendes@matrix.com");
     var rodolfo = sistema.obterParticipante("rmendes@matrix.com");
-    assert.ok(!rodolfo, "Participante não foi encontrado no registro");
+    assert.equal(rodolfo, undefined, "Participante não foi encontrado no registro");
   });
   //Teste adicional implementado 
 
