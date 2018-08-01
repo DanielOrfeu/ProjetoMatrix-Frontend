@@ -73,19 +73,13 @@ function SistemaCadastro() {
 			return objeto.email === email;
 		});
 		participantes[index].nota = nota;
-		if(participantes[index].nota >= 70){
-			participantes[index].aprovado = true;
-		}else{
-			participantes[index].aprovado = false;
-		} 
+		participantes[index].aprovado = participantes[index].nota >= 70; 
     }
     function obterMediaDasNotasDosParticipantes(){
         //implemente o código necessário
-		var soma = participantes.reduce(function(acumulador,objeto){
+		return participantes.reduce(function(acumulador,objeto){
 			return acumulador + objeto.nota;
-			
-		},0);
-		return soma/participantes.length;
+		},0) / participantes.length;
     }
     function obterTotalDeParticipantes(){
         return participantes.length;
@@ -96,13 +90,7 @@ function SistemaCadastro() {
     }
     function obterQuantidadeDeParticipantesPorSexo(sexo){
         //implemente o código necessário
-		var contador = 0;
-		participantes.forEach(function(objeto){
-			if(objeto.sexo === sexo){
-				contador++;
-			}
-		});
-		return contador;
+		return buscarParticipantesPorSexo(sexo).length;
 	}
     return {
         adicionarParticipante,
