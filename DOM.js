@@ -5,6 +5,18 @@ aprovadoString = "";
 (function primeiroLoad(){
 	alterarTabela();
 })();
+function verificarFormVazio(){
+	if(
+		document.getElementById("nomeInput").value !== "" && 
+		document.getElementById("sobrenomeInput").value !== "" && 
+		document.getElementById("emailInput").value !== "" && 
+		document.getElementById("idadeInput").value !== "" && 
+		document.getElementById("notaInput").value !== ""
+	 )
+		document.getElementById("botaoCadastrar").disabled = false;
+	else
+		document.getElementById("botaoCadastrar").disabled = true;
+}
 function checarSexo(){
 	return document.getElementById("sexomInput").checked ? 1 : 2;
 }
@@ -62,6 +74,7 @@ function clickEditar(email){
 	document.getElementById("idadeInput").value = participante.idade;
 	document.getElementById("notaInput").value = participante.nota;
 	participante.sexo === 1 ? document.getElementsByName("sexomInput").checked = true : document.getElementById("sexofInput").checked = true;
+	verificarFormVazio();
 };
 function clickExcluir(email){
 		sistema.removerParticipante(email);
