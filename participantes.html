@@ -9,7 +9,7 @@
 	<title>Participantes</title>
 	<style>
 		.estrutura{
-		margin: 26px;
+			margin: 26px;
 		}
 	</style>
 </head>  
@@ -25,26 +25,26 @@
 			<div class="row">
 				<div class="col-sm">
 					<h5>Cadastro de participante</h5>
-					<form id="formularioParticipantes" class="needs-validation was-validated" novalidate="">
+					<form id="formularioParticipantes" class="needs-validation was-validated" novalidate="" oninput="verificarFormVazio()">
 						<div class="form-group">
 							<label for="formGroupNomeInput">Nome:</label>
-							<input type="text" class="form-control" id="nomeInput" placeholder="Exemplo: Daniel" value="" required="">
+							<input type="text" class="form-control" id="nomeInput" placeholder="Exemplo: Daniel" value="" required="" oninput="verificarFormVazio()">
 						</div>
 						<div class="form-group">
 							<label for="formGroupSobrenomeInput">Sobrenome: </label>
-							<input type="text" class="form-control" id="sobrenomeInput" placeholder="Exemplo: Orfeu" value="" required="">
+							<input type="text" class="form-control" id="sobrenomeInput" placeholder="Exemplo: Orfeu" value="" required="" oninput="verificarFormVazio()">
 						</div>					
 						<div class="form-group">
 							<label for="formGroupEmailInput ">E-mail:</label>
-							<input type="email" class="form-control" id="emailInput" placeholder="Exemplo: dorfeu@matrix.com" required="">
+							<input type="email" class="form-control" id="emailInput" placeholder="Exemplo: dorfeu@matrix.com" required="" oninput="verificarFormVazio()">
 						</div>
 						<div class="form-group">
 							<label for="formGroupIdadeInput">Idade</label>
-							<input type="number" class="form-control" id="idadeInput" placeholder="Exemplo: 21" value="" required="">
+							<input type="number" class="form-control" id="idadeInput" placeholder="Exemplo: 21" value="" required="" oninput="verificarFormVazio()">
 						</div>
 						<div class="form-group">
 							<label for="formGroupNotaInput">Nota:</label>
-							<input type="number" class="form-control" id="notaInput" placeholder="Exemplo: 90" value="" required="">
+							<input type="number" class="form-control" id="notaInput" placeholder="Exemplo: 90" value="" required="" oninput="verificarFormVazio()">
 						</div>
 						<div class="form-group">
 							<label for="formGroupSexoInput">Sexo:</label>
@@ -58,9 +58,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<button type="submit" onclick="salvarParticipante()" class="btn btn-outline-danger" id="botaoCadastrar" >Salvar</button>
-							<!-- <button type="button" class="btn btn-outline-danger" id="botaoEditar">Editar</button> -->
-							<!-- <button type="button" class="btn btn-outline-danger" id="botaoExcluir">Excluir</button> -->
+							<button type="submit" onclick="salvarParticipante()" class="btn btn-danger" id="botaoCadastrar" disabled>Salvar</button>
 						</div>
 					</form>		
 				</div>
