@@ -73,7 +73,7 @@ function clickEditar(email){
 	document.getElementById("emailInput").disabled = true;
 	document.getElementById("idadeInput").value = participante.idade;
 	document.getElementById("notaInput").value = participante.nota;
-	participante.sexo === 1 ? document.getElementsByName("sexomInput").checked = true : document.getElementById("sexofInput").checked = true;
+	participante.sexo === 1 ? document.getElementById("sexomInput").checked = true : document.getElementById("sexofInput").checked = true;
 	verificarFormVazio();
 };
 function clickExcluir(email){
