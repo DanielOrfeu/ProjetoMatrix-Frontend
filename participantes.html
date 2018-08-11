@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<title>Participantes</title>
+	<style>
+		.estrutura{
+		margin: 26px;
+		}
+	</style>
+</head>  
+<body>
+	<nav class="navbar navbar-dark bg-dark">
+		<a class="navbar-brand" href="#">
+			<img src="https://yt3.ggpht.com/a-/ACSszfH8JuzyaH7HLxEl0pk-2woXD7drieJcpfQR7w=s900-mo-c-c0xffffffff-rj-k-no" width="30" height="30" class="d-inline-block align-top" alt="">
+					Controle de participantes - Projeto Matrix 3.0
+		</a>
+	</nav>
+	<div class = "estrutura">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm">
+					<h5>Cadastro de participante</h5>
+					<form id="formularioParticipantes" class="needs-validation was-validated" novalidate="">
+						<div class="form-group">
+							<label for="formGroupNomeInput">Nome:</label>
+							<input type="text" class="form-control" id="nomeInput" placeholder="Exemplo: Daniel" value="" required="">
+						</div>
+						<div class="form-group">
+							<label for="formGroupSobrenomeInput">Sobrenome: </label>
+							<input type="text" class="form-control" id="sobrenomeInput" placeholder="Exemplo: Orfeu" value="" required="">
+						</div>					
+						<div class="form-group">
+							<label for="formGroupEmailInput ">E-mail:</label>
+							<input type="email" class="form-control" id="emailInput" placeholder="Exemplo: dorfeu@matrix.com" required="">
+						</div>
+						<div class="form-group">
+							<label for="formGroupIdadeInput">Idade</label>
+							<input type="number" class="form-control" id="idadeInput" placeholder="Exemplo: 21" value="" required="">
+						</div>
+						<div class="form-group">
+							<label for="formGroupNotaInput">Nota:</label>
+							<input type="number" class="form-control" id="notaInput" placeholder="Exemplo: 90" value="" required="">
+						</div>
+						<div class="form-group">
+							<label for="formGroupSexoInput">Sexo:</label>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="inlineRadioOptions" id="sexomInput" value="1" checked>
+								<label class="form-check-label" for="inlineRadio1">Masculino</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="inlineRadioOptions" id="sexofInput" value="2">
+								<label class="form-check-label" for="inlineRadio2">Feminino</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<button type="submit" onclick="salvarParticipante()" class="btn btn-outline-danger" id="botaoCadastrar" >Salvar</button>
+							<!-- <button type="button" class="btn btn-outline-danger" id="botaoEditar">Editar</button> -->
+							<!-- <button type="button" class="btn btn-outline-danger" id="botaoExcluir">Excluir</button> -->
+						</div>
+					</form>		
+				</div>
+				<div class="col-sm">
+					<h5><p>Participantes Cadastrados</p></h5>
+					<table class="table table-bordered" id="tabelaCadastrados">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">Nome Completo</th>
+								<th scope="col">Idade</th>
+								<th scope="col">Sexo</th>
+								<th scope="col">Nota</th>
+								<th scope="col">Aprovado?</th>
+								<th scope="col">Ação</th>
+							</tr>
+						</thead>
+						<tbody id = "bodyCadastros">
+						</tbody>
+					</table>	
+				</div>
+			</div>
+		</div>
+		<!-- Optional JavaScript -->
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+		<script src="armazenamento.js"></script>
+		<script src="sistema.js"></script>
+		<script src="DOM.js"></script>
+	</div>
+</body>
+</html>
