@@ -37,7 +37,6 @@ function salvarParticipante(){
 			checarSexo(),
 			document.getElementById("notaInput").value
 		);
-		alterarTabela();
 		window.location.reload(true);
 		window.alert("Participante editado com sucesso!");
 	}else{
@@ -53,7 +52,6 @@ function salvarParticipante(){
 				document.getElementById("emailInput").value,
 				document.getElementById("notaInput").value
 			);
-			alterarTabela();
 			window.location.reload(true);
 			window.alert("Participante cadastrado com sucesso!");
 			
@@ -78,7 +76,6 @@ function clickEditar(email){
 };
 function clickExcluir(email){
 		sistema.removerParticipante(email);
-		alterarTabela();
 		window.location.reload(true);
 		window.alert("Participante excluído com sucesso!");
 };
