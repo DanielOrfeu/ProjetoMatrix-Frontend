@@ -86,7 +86,6 @@ function SistemaCadastro() {
 		adicionarParticipante,
 		removerParticipante,
 		editarParticipante,
-		mudarNota,
 		buscarParticipantesPorNome,
 		buscarParticipantesPorSexo,
 		buscarParticipantesAprovados,
