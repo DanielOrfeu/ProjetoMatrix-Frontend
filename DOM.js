@@ -21,10 +21,10 @@ function checarSexo(){
 	return document.getElementById("sexomInput").checked ? 1 : 2;
 }
 function alterarTabela(){	
-	sistema.recuperarParticipantes().forEach(function(objeto, index){
+	sistema.recuperarParticipantes().forEach(function(objeto){
 		objeto.sexo === 1 ? radioString = "Masculino" : radioString = "Feminino";
 		objeto.aprovado ? aprovadoString = "Sim" : aprovadoString = "Não";
-		document.getElementById("bodyCadastros").innerHTML += '<tr><td>'+(index+1)+'</td><td>'+objeto.nome+' '+objeto.sobrenome+'</td><td>'+objeto.idade+'</td><td>'+radioString+'</td><td>'+objeto.nota+'</td><td>'+aprovadoString+'</td><td>'+'<a href="javascript:void(0)" onclick="clickEditar(\''+objeto.email+'\')">Editar</a>'+' '+'<a href="javascript:void(0)" onclick="clickExcluir(\''+objeto.email+'\')">Excluir</a>'+'</td></tr>'
+		document.getElementById("bodyCadastros").innerHTML += '<tr><td>'+objeto.id+'</td><td>'+objeto.nome+' '+objeto.sobrenome+'</td><td>'+objeto.idade+'</td><td>'+radioString+'</td><td>'+objeto.nota+'</td><td>'+aprovadoString+'</td><td>'+'<a href="javascript:void(0)" onclick="clickEditar(\''+objeto.email+'\')">Editar</a>'+' '+'<a href="javascript:void(0)" onclick="clickExcluir(\''+objeto.email+'\')">Excluir</a>'+'</td></tr>'
 	});
 };
 function salvarParticipante(){
@@ -37,27 +37,15 @@ function salvarParticipante(){
 			checarSexo(),
 			document.getElementById("notaInput").value
 		);
-		window.location.reload(true);
-		window.alert("Participante editado com sucesso!");
 	}else{
-		try{
-			sistema.adicionarParticipante(
-				document.getElementById("nomeInput").value,
-				document.getElementById("sobrenomeInput").value,
-				document.getElementById("emailInput").value,
-				document.getElementById("idadeInput").value,
-				checarSexo()
-			);
-			sistema.adicionarNotaAoParticipante(
-				document.getElementById("emailInput").value,
-				document.getElementById("notaInput").value
-			);
-			window.location.reload(true);
-			window.alert("Participante cadastrado com sucesso!");
-			
-		}catch(Error){
-			window.alert(Error.message);
-		}
+		sistema.adicionarParticipante(
+			document.getElementById("nomeInput").value,
+			document.getElementById("sobrenomeInput").value,
+			document.getElementById("emailInput").value,
+			document.getElementById("idadeInput").value,
+			checarSexo(),
+			document.getElementById("notaInput").value
+		);
 	}
 	modoEditor = false;
 	document.getElementById("emailInput").disabled = false;
@@ -76,6 +64,4 @@ function clickEditar(email){
 };
 function clickExcluir(email){
 		sistema.removerParticipante(email);
-		window.location.reload(true);
-		window.alert("Participante excluído com sucesso!");
 };
