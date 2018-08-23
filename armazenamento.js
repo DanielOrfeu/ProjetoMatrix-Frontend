@@ -1,21 +1,21 @@
 function Armazenamento(key){
-	if(recuperarLocalStorage() === null){
+	if(recuperarDadosDosParticipantes() === null){
 		window.localStorage.setItem(key,"[]");
 	}
 	function adicionar(objeto){
-		var arrayLocal = recuperarLocalStorage();
+		var arrayLocal = recuperarDadosDosParticipantes();
 		arrayLocal.push(objeto);
 		armazenarLocalStorage(arrayLocal);	
 	}
 	function remover(atributo, elemento){
-		var arrayLocal = recuperarLocalStorage();
+		var arrayLocal = recuperarDadosDosParticipantes();
 		arrayLocal.splice(arrayLocal.findIndex(function(objeto){
 			return objeto[atributo] === elemento;
 		}),1) ;
 		armazenarLocalStorage(arrayLocal);
 	}
 	function editar(atributo, objManipulado){
-		var arrayLocal = recuperarLocalStorage();
+		var arrayLocal = recuperarDadosDosParticipantes();
 		var index = arrayLocal.findIndex(function(objeto){
 			return objeto[atributo] === objManipulado[atributo];
 		});
@@ -23,12 +23,12 @@ function Armazenamento(key){
 		armazenarLocalStorage(arrayLocal);
 	}
 	function obterItem(atributo, elemento){
-		return recuperarLocalStorage().find(function(objeto){
+		return recuperarDadosDosParticipantes().find(function(objeto){
 			return objeto[atributo] === elemento;
 		});
 	}
 	function obterItens(atributo, elemento){
-		return recuperarLocalStorage().filter(function(objeto){
+		return recuperarDadosDosParticipantes().filter(function(objeto){
 			return objeto[atributo] === elemento;
 		});
 	}
