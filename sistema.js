@@ -8,24 +8,26 @@ function Participante() {
     this.aprovado = false
 }
 function SistemaCadastro() {
+	
 	const armazenamento = new ArmazenamentoHTTP();
-	function adicionarParticipante(nome, sobrenome, email, idade, sexo, nota){
-		var p = new Participante();
-		p.nome = nome;
-		p.sobrenome = sobrenome;
-		p.email = email;
-		p.idade = idade;
-		p.sexo = sexo;
-		p.nota = nota;
-		p.aprovado = nota >= 70;
-		armazenamento.adicionar(p);
+	function adicionarParticipante(nome, sobrenome, email, idade, sexo) {
+		if(obterParticipante(email) === undefined){
+			var p = new Participante();
+			p.nome = nome;
+			p.sobrenome = sobrenome;
+			p.email = email;
+			p.idade = idade;
+			p.sexo = sexo;
+			armazenamento.adicionar(p);
+		}else{
+			throw new Error('Já existe um participante registrado com o email: '+email+'');	
+		}
 	}
 	function removerParticipante(email) {
 		armazenamento.remover("email",email);
 	}
 	function editarParticipante(nome, sobrenome, email, idade, sexo, nota){
 		var objeto = obterParticipante(email);
-		//objeto.id (inalterado)
 		objeto.nome = nome;
 		objeto.sobrenome = sobrenome;
 		/*
@@ -36,9 +38,12 @@ function SistemaCadastro() {
 		*/
 		objeto.idade = idade;
 		objeto.sexo = sexo;
+		mudarNota(objeto, nota);
+		armazenamento.editar("email", objeto);	
+	}
+	function mudarNota(objeto, nota){
 		objeto.nota = nota;
-		objeto.aprovado = nota >= 70;
-		armazenamento.editar(objeto);	
+		objeto.aprovado = objeto.nota >= 70; 
 	}
 	function buscarParticipantesPorNome(nome){
 		return armazenamento.obterItens("nome", nome);
@@ -55,16 +60,21 @@ function SistemaCadastro() {
 	function obterParticipante(email){
 		return armazenamento.obterItem("email", email);
 	}
+	function adicionarNotaAoParticipante(email, nota){
+		var objeto = obterParticipante(email);
+		mudarNota(objeto, nota);
+		armazenamento.editar("email", objeto);
+	}
 	function obterMediaDasNotasDosParticipantes(){
 		return recuperarParticipantes().reduce(function(acumulador,objeto){
 			return acumulador + objeto.nota;
 		},0) / obterTotalDeParticipantes();
 	}
 	function obterTotalDeParticipantes(){
-		return recuperarParticipantes().length;
+	return armazenamento.recuperarDadosDosParticipantes().length;
 	}
 	function recuperarParticipantes(){
-		return armazenamento.recuperarDadosDoServidor();
+		return armazenamento.recuperarDadosDosParticipantes();
 	}
 	function verificarSeParticipanteEstaAprovado(email){
 		return obterParticipante(email).aprovado;
@@ -81,6 +91,7 @@ function SistemaCadastro() {
 		buscarParticipantesAprovados,
 		buscarParticipantesReprovados,
 		obterParticipante,
+		adicionarNotaAoParticipante,
 		obterMediaDasNotasDosParticipantes,
 		obterTotalDeParticipantes,
 		recuperarParticipantes,
