@@ -1,5 +1,4 @@
 function ArmazenamentoHTTP(){
-	recuperarDadosDoServidor();
 	function adicionar(objeto){
 		var toJSON = JSON.stringify(objeto);
 		$.ajax({
@@ -8,14 +7,7 @@ function ArmazenamentoHTTP(){
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			data: toJSON,
-			async: false,
-			success: function(){
-				window.alert("Participante: "+objeto.nome+" "+objeto.sobrenome+" adicionado com sucesso");
-			},
-			error: function(data){
-				alert(data.responseText);
-				history.go(0);
-			}
+			async: false
 		});	
 	}	
 	function remover(atributo, elemento){
@@ -24,14 +16,10 @@ function ArmazenamentoHTTP(){
 			type: "DELETE",
 			url: 'http://matrix.avalie.net/api/participantes/'+toDELETE.id,
 			dataType: "json",
-			async: true,
-			success: function() {
-				window.alert("Participante: "+toDELETE.nome+" "+toDELETE.sobrenome+" removido com sucesso");
-				history.go(0);
-			}
+			async: true
 		});
 	}
-	function editar(objManipulado){
+	function editar(atributo, objManipulado){
 		var toJSON = JSON.stringify(objManipulado);
 		$.ajax({
 			type: "PUT",
@@ -39,24 +27,20 @@ function ArmazenamentoHTTP(){
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			data: toJSON,
-			async: false,
-			success: function(){
-				window.alert("Participante N?:"+objManipulado.id+" editado com sucesso");
-				history.go(0);
-			}
+			async: false
 		});  
 	}
 	function obterItem(atributo, elemento){
-		return recuperarDadosDoServidor().find(function(objeto){
+		return recuperarDadosDosParticipantes().find(function(objeto){
 			return objeto[atributo] === elemento;
 		});
 	}
 	function obterItens(atributo, elemento){
-		return recuperarDadosDoServidor().filter(function(objeto){
+		return recuperarDadosDosParticipantes().filter(function(objeto){
 			return objeto[atributo] === elemento;
 		});
 	}
-	function recuperarDadosDoServidor(){
+	function recuperarDadosDosParticipantes(){
 		var arrayServer = [];
 		$.ajax({
 			type: "GET",
@@ -75,6 +59,6 @@ function ArmazenamentoHTTP(){
 		editar,
 		obterItem,
 		obterItens,
-		recuperarDadosDoServidor
+		recuperarDadosDosParticipantes
 	};
 }
