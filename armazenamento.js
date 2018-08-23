@@ -14,12 +14,12 @@ function Armazenamento(key){
 		}),1) ;
 		armazenarLocalStorage(arrayLocal);
 	}
-	function editar(atributo, objManupulado){
+	function editar(atributo, objManipulado){
 		var arrayLocal = recuperarLocalStorage();
 		var index = arrayLocal.findIndex(function(objeto){
-			return objeto[atributo] === objManupulado[atributo];
+			return objeto[atributo] === objManipulado[atributo];
 		});
-		arrayLocal[index] = objManupulado;
+		arrayLocal[index] = objManipulado;
 		armazenarLocalStorage(arrayLocal);
 	}
 	function obterItem(atributo, elemento){
@@ -32,7 +32,7 @@ function Armazenamento(key){
 			return objeto[atributo] === elemento;
 		});
 	}
-	function recuperarLocalStorage(){
+	function recuperarDadosDosParticipantes(){
 		return JSON.parse(window.localStorage.getItem(key));
 	}
 	function armazenarLocalStorage(arrayModificado){
@@ -44,9 +44,6 @@ function Armazenamento(key){
 		editar,
 		obterItem,
 		obterItens,
-		recuperarLocalStorage,
-		armazenarLocalStorage	
+		recuperarDadosDosParticipantes
 	};
 }
-
-
