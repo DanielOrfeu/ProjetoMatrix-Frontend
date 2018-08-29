@@ -1,39 +1,24 @@
 function ArmazenamentoHTTP(){
 	function adicionar(objeto){
-		var toJSON = JSON.stringify(objeto);
-		$.ajax({
-			type: "POST",
-			url: 'http://matrix.avalie.net/api/participantes/',
-			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			data: toJSON,
-			async: false
-		});	
-	}	
-	function remover(atributo, elemento){
-		var toDELETE = obterItem(atributo, elemento);
-		$.ajax({
-			type: "DELETE",
-			url: 'http://matrix.avalie.net/api/participantes/'+toDELETE.id,
-			dataType: "json",
-			async: true
-		});
+		return axios.post('http://matrix.avalie.net/api/participantes',objeto)
+			.then(function(result){
+				return result.data;
+			})
+			.catch(function(result){
+				throw result.response.data.message;
+			});
 	}
-	function editar(atributo, objManipulado){
-		var toJSON = JSON.stringify(objManipulado);
-		$.ajax({
-			type: "PUT",
-			url: 'http://matrix.avalie.net/api/participantes/'+objManipulado.id,
-			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			data: toJSON,
-			async: false
-		});  
+	function remover(id){
+		return axios.delete('http://matrix.avalie.net/api/participantes/'+id);	
 	}
-	function obterItem(atributo, elemento){
-		return recuperarDadosDosParticipantes().find(function(objeto){
-			return objeto[atributo] === elemento;
-		});
+	function editar(objeto){
+		return axios.put('http://matrix.avalie.net/api/participantes/'+objeto.id,objeto);
+	}
+	function obterItem(id){
+		return axios.get('http://matrix.avalie.net/api/participantes/'+id)
+			.then(function(result){
+				return result.data;
+			});
 	}
 	function obterItens(atributo, elemento){
 		return recuperarDadosDosParticipantes().filter(function(objeto){
@@ -41,17 +26,10 @@ function ArmazenamentoHTTP(){
 		});
 	}
 	function recuperarDadosDosParticipantes(){
-		var arrayServer = [];
-		$.ajax({
-			type: "GET",
-			url: 'http://matrix.avalie.net/api/participantes/',
-			dataType: "json",
-			async: false,
-			success: function(data){
-				arrayServer = data;
-			}
-		});
-		return arrayServer;
+		return axios.get('http://matrix.avalie.net/api/participantes/')
+			.then(function(result){
+				return result.data;
+			});
 	}
 	return{
 		adicionar,
