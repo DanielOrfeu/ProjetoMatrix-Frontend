@@ -10,40 +10,39 @@ function Participante() {
 function SistemaCadastro() {
 	
 	const armazenamento = new ArmazenamentoHTTP();
-	function adicionarParticipante(nome, sobrenome, email, idade, sexo) {
-		if(obterParticipante(email) === undefined){
-			var p = new Participante();
-			p.nome = nome;
-			p.sobrenome = sobrenome;
-			p.email = email;
-			p.idade = idade;
-			p.sexo = sexo;
-			armazenamento.adicionar(p);
-		}else{
-			throw new Error('Já existe um participante registrado com o email: '+email+'');	
-		}
+	function adicionarParticipante(nome, sobrenome, email, idade, sexo, nota) {
+		
+		var p = new Participante();
+		p.nome = nome;
+		p.sobrenome = sobrenome;
+		p.email = email;
+		p.idade = idade;
+		p.sexo = sexo;
+		p.nota = nota;
+		p.aprovado = p.nota >= 70
+		
+		
+		return armazenamento.adicionar(p);
 	}
-	function removerParticipante(email) {
-		armazenamento.remover("email",email);
+	function removerParticipante(id) {
+		return armazenamento.remover(id);
 	}
-	function editarParticipante(nome, sobrenome, email, idade, sexo, nota){
-		var objeto = obterParticipante(email);
-		objeto.nome = nome;
-		objeto.sobrenome = sobrenome;
-		/*
-		* objeto.email não declarado para assegurar que a primary key (pk)
-		* não sofra alteração, mesmo que o usuário consiga o acesso à 
-		* modificação pelo formulário HTML, levanto em conta que objeto.email já existe
-		* pela chamada da função obterParticipante(email)
-		*/
-		objeto.idade = idade;
-		objeto.sexo = sexo;
-		mudarNota(objeto, nota);
-		armazenamento.editar("email", objeto);	
-	}
-	function mudarNota(objeto, nota){
-		objeto.nota = nota;
-		objeto.aprovado = objeto.nota >= 70; 
+	function editarParticipante(id, nome, sobrenome, email, idade, sexo, nota){
+		return obterParticipante(id)
+			.then(function(objeto){
+				objeto.nome = nome;
+				objeto.sobrenome = sobrenome;
+				/*
+				* objeto.email e objeto.id não declarados para assegurar que as primary key (pk)
+				* não sofram alterações, mesmo que o usuário consiga o acesso à 
+				* modificação pelo formulário HTML.
+				*/
+				objeto.idade = idade;
+				objeto.sexo = sexo;
+				objeto.nota = nota;
+				objeto.aprovado = objeto.nota >= 70
+				return armazenamento.editar(objeto);
+			});
 	}
 	function buscarParticipantesPorNome(nome){
 		return armazenamento.obterItens("nome", nome);
@@ -57,13 +56,8 @@ function SistemaCadastro() {
 	function buscarParticipantesReprovados(){
 		return armazenamento.obterItens("aprovado", false);
 	}
-	function obterParticipante(email){
-		return armazenamento.obterItem("email", email);
-	}
-	function adicionarNotaAoParticipante(email, nota){
-		var objeto = obterParticipante(email);
-		mudarNota(objeto, nota);
-		armazenamento.editar("email", objeto);
+	function obterParticipante(id){
+		return armazenamento.obterItem(id);
 	}
 	function obterMediaDasNotasDosParticipantes(){
 		return recuperarParticipantes().reduce(function(acumulador,objeto){
@@ -76,8 +70,8 @@ function SistemaCadastro() {
 	function recuperarParticipantes(){
 		return armazenamento.recuperarDadosDosParticipantes();
 	}
-	function verificarSeParticipanteEstaAprovado(email){
-		return obterParticipante(email).aprovado;
+	function verificarSeParticipanteEstaAprovado(id){
+		return obterParticipante(id).aprovado;
 	}
 	function obterQuantidadeDeParticipantesPorSexo(sexo){
 		return buscarParticipantesPorSexo(sexo).length;
@@ -91,7 +85,6 @@ function SistemaCadastro() {
 		buscarParticipantesAprovados,
 		buscarParticipantesReprovados,
 		obterParticipante,
-		adicionarNotaAoParticipante,
 		obterMediaDasNotasDosParticipantes,
 		obterTotalDeParticipantes,
 		recuperarParticipantes,
